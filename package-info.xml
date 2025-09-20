@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE package-info SYSTEM "http://www.simplemachines.org/xml/package-info">
+<package-info xmlns="http://www.simplemachines.org/xml/package-info" version="1.0">
+    <id>markdownsupport:smf</id>
+    <name>Markdown Support</name>
+    <type>modification</type>
+    <version>1.0.0</version>
+    <install for="2.1.4 - 2.1.*">
+        <readme>README.md</readme>
+        <files>
+            <create-dir name="$sourcedir/MarkdownSupport" />
+            <file name="Sources/MarkdownSupport/Parser.php" destination="$sourcedir/MarkdownSupport" />
+            <file name="Sources/MarkdownSupport/Hooks.php" destination="$sourcedir/MarkdownSupport" />
+        </files>
+        <hooks>
+            <hook hook="integrate_preparsecode" function="MarkdownSupport\\Hooks::preparseCode" file="$sourcedir/MarkdownSupport/Hooks.php" />
+            <hook hook="integrate_preparsebbc" function="MarkdownSupport\\Hooks::preparseBBC" file="$sourcedir/MarkdownSupport/Hooks.php" />
+        </hooks>
+    </install>
+    <uninstall for="2.1.4 - 2.1.*">
+        <files>
+            <remove file="$sourcedir/MarkdownSupport/Parser.php" />
+            <remove file="$sourcedir/MarkdownSupport/Hooks.php" />
+            <remove-dir name="$sourcedir/MarkdownSupport" />
+        </files>
+        <hooks>
+            <hook hook="integrate_preparsecode" function="MarkdownSupport\\Hooks::preparseCode" file="$sourcedir/MarkdownSupport/Hooks.php" reverse="true" />
+            <hook hook="integrate_preparsebbc" function="MarkdownSupport\\Hooks::preparseBBC" file="$sourcedir/MarkdownSupport/Hooks.php" reverse="true" />
+        </hooks>
+    </uninstall>
+</package-info>
