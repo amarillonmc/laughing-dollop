@@ -5,7 +5,7 @@
     <name>Markdown Support</name>
     <type>modification</type>
     <version>1.0.0</version>
-    <install for="2.1.4 - 2.1.*">
+    <install for="2.*">
         <readme>README.md</readme>
         <files>
             <create-dir name="$sourcedir/MarkdownSupport" />
@@ -17,7 +17,7 @@
             <hook hook="integrate_preparsebbc" function="MarkdownSupport\\Hooks::preparseBBC" file="$sourcedir/MarkdownSupport/Hooks.php" />
         </hooks>
     </install>
-    <uninstall for="2.1.4 - 2.1.*">
+    <uninstall for="2.*">
         <files>
             <remove file="$sourcedir/MarkdownSupport/Parser.php" />
             <remove file="$sourcedir/MarkdownSupport/Hooks.php" />
