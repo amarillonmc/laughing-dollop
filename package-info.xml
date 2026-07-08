@@ -4,28 +4,42 @@
     <id>markdownsupport:smf</id>
     <name>Markdown Support</name>
     <type>modification</type>
-    <version>1.0.0</version>
-    <install for="2.*">
-        <readme>README.md</readme>
-        <files>
-            <create-dir name="$sourcedir/MarkdownSupport" />
-            <file name="Sources/MarkdownSupport/Parser.php" destination="$sourcedir/MarkdownSupport" />
-            <file name="Sources/MarkdownSupport/Hooks.php" destination="$sourcedir/MarkdownSupport" />
-        </files>
-        <code>
-            <hook hook="integrate_preparsecode" function="MarkdownSupport\\Hooks::preparseCode" file="$sourcedir/MarkdownSupport/Hooks.php" />
-            <hook hook="integrate_preparsebbc" function="MarkdownSupport\\Hooks::preparseBBC" file="$sourcedir/MarkdownSupport/Hooks.php" />
-        </code>
+    <version>1.1.0</version>
+
+    <install for="2.1 - 2.1.99">
+        <readme type="file">README.md</readme>
+        <require-file name="Sources/MarkdownSupport.php" destination="$sourcedir" />
+        <hook hook="integrate_preparsecode" function="MarkdownSupport\\Hooks::preparseCode" file="$sourcedir/MarkdownSupport/Hooks.php" reverse="true" />
+        <hook hook="integrate_preparsebbc" function="MarkdownSupport\\Hooks::preparseBBC" file="$sourcedir/MarkdownSupport/Hooks.php" reverse="true" />
+        <hook hook="integrate_preparsecode" function="markdown_support_preparsecode" file="$sourcedir/MarkdownSupport.php" />
+        <hook hook="integrate_pre_parsebbc" function="markdown_support_pre_parsebbc" file="$sourcedir/MarkdownSupport.php" />
+        <hook hook="integrate_bbc_codes" function="markdown_support_bbc_codes" file="$sourcedir/MarkdownSupport.php" />
+        <hook hook="integrate_general_mod_settings" function="markdown_support_general_mod_settings" file="$sourcedir/MarkdownSupport.php" />
     </install>
-    <uninstall for="2.*">
-        <files>
-            <remove file="$sourcedir/MarkdownSupport/Parser.php" />
-            <remove file="$sourcedir/MarkdownSupport/Hooks.php" />
-            <remove-dir name="$sourcedir/MarkdownSupport" />
-        </files>
-        <code>
-            <hook hook="integrate_preparsecode" function="MarkdownSupport\\Hooks::preparseCode" file="$sourcedir/MarkdownSupport/Hooks.php" reverse="true" />
-            <hook hook="integrate_preparsebbc" function="MarkdownSupport\\Hooks::preparseBBC" file="$sourcedir/MarkdownSupport/Hooks.php" reverse="true" />
-        </code>
+
+    <upgrade from="1.0.0" for="2.1 - 2.1.99">
+        <remove-file name="$sourcedir/MarkdownSupport/Parser.php" />
+        <remove-file name="$sourcedir/MarkdownSupport/Hooks.php" />
+        <remove-dir name="$sourcedir/MarkdownSupport" />
+        <require-file name="Sources/MarkdownSupport.php" destination="$sourcedir" />
+        <hook hook="integrate_preparsecode" function="MarkdownSupport\\Hooks::preparseCode" file="$sourcedir/MarkdownSupport/Hooks.php" reverse="true" />
+        <hook hook="integrate_preparsebbc" function="MarkdownSupport\\Hooks::preparseBBC" file="$sourcedir/MarkdownSupport/Hooks.php" reverse="true" />
+        <hook hook="integrate_preparsecode" function="markdown_support_preparsecode" file="$sourcedir/MarkdownSupport.php" />
+        <hook hook="integrate_pre_parsebbc" function="markdown_support_pre_parsebbc" file="$sourcedir/MarkdownSupport.php" />
+        <hook hook="integrate_bbc_codes" function="markdown_support_bbc_codes" file="$sourcedir/MarkdownSupport.php" />
+        <hook hook="integrate_general_mod_settings" function="markdown_support_general_mod_settings" file="$sourcedir/MarkdownSupport.php" />
+    </upgrade>
+
+    <uninstall for="2.1 - 2.1.99">
+        <hook hook="integrate_preparsecode" function="markdown_support_preparsecode" file="$sourcedir/MarkdownSupport.php" reverse="true" />
+        <hook hook="integrate_pre_parsebbc" function="markdown_support_pre_parsebbc" file="$sourcedir/MarkdownSupport.php" reverse="true" />
+        <hook hook="integrate_bbc_codes" function="markdown_support_bbc_codes" file="$sourcedir/MarkdownSupport.php" reverse="true" />
+        <hook hook="integrate_general_mod_settings" function="markdown_support_general_mod_settings" file="$sourcedir/MarkdownSupport.php" reverse="true" />
+        <hook hook="integrate_preparsecode" function="MarkdownSupport\\Hooks::preparseCode" file="$sourcedir/MarkdownSupport/Hooks.php" reverse="true" />
+        <hook hook="integrate_preparsebbc" function="MarkdownSupport\\Hooks::preparseBBC" file="$sourcedir/MarkdownSupport/Hooks.php" reverse="true" />
+        <remove-file name="$sourcedir/MarkdownSupport.php" />
+        <remove-file name="$sourcedir/MarkdownSupport/Parser.php" />
+        <remove-file name="$sourcedir/MarkdownSupport/Hooks.php" />
+        <remove-dir name="$sourcedir/MarkdownSupport" />
     </uninstall>
 </package-info>

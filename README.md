@@ -1,23 +1,25 @@
-# Markdown Support for Simple Machines Forum 2.1
+# Markdown Support for SMF 2.1
 
-This modification enables Markdown formatting in Simple Machines Forum (SMF) 2.1.4 and higher. It automatically converts Markdown syntax into BBCode when users create new posts and seamlessly parses legacy messages that contain Markdown when they are displayed.
+This package adds lightweight Markdown support to Simple Machines Forum 2.1.x, including SMF 2.1.7.
 
 ## Features
 
-- Automatic Markdown → BBCode conversion on post submission
-- Runtime conversion for existing Markdown posts to maintain formatting
-- Support for headings, emphasis, lists, blockquotes, code blocks, inline code, links, images, horizontal rules, and strikethrough
+- Converts Markdown to BBCode when new posts are submitted.
+- Adds a `Parse Markdown in existing posts` option under the SMF modification settings page.
+- Parses Markdown inside `[markdown]...[/markdown]` blocks even when the existing-post option is disabled.
+- Supports headings, bold, italic, strikethrough, links, images, blockquotes, ordered and unordered lists, horizontal rules, fenced code blocks, and inline code.
 
 ## Installation
 
-1. Create a release archive (e.g. `MarkdownSupport-1.0.0.zip`) containing the contents of this repository.
-2. Upload the archive via the SMF Package Manager (`Admin » Package Manager » Download Packages`).
-3. Follow the installation prompts.
+1. Create a zip archive containing `package-info.xml`, `README.md`, `LICENSE`, and the `Sources` directory.
+2. Upload the archive in the SMF Package Manager.
+3. Install the package.
+4. To render Markdown in old posts, enable `Parse Markdown in existing posts` in the modification settings page.
 
-## Uninstallation
+New posts and `[markdown]...[/markdown]` blocks do not require the old-post option.
 
-Uninstall through the Package Manager. All integration hooks and added files are removed automatically.
+## Notes
 
-## Customisation
+The package uses SMF integration hooks only. It does not edit core SMF files.
 
-The Markdown to BBCode conversion is implemented in `Sources/MarkdownSupport/Parser.php`. You can expand or adjust the supported syntax there if needed.
+The Markdown parser is implemented in `Sources/MarkdownSupport.php`. It intentionally converts Markdown to BBCode rather than storing rendered HTML.
