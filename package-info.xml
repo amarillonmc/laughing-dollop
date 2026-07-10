@@ -4,7 +4,7 @@
     <id>markdownsupport:smf</id>
     <name>Markdown Support</name>
     <type>modification</type>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
 
     <install for="2.1 - 2.1.99">
         <readme type="file">README.md</readme>
