@@ -23,3 +23,9 @@ New posts and `[markdown]...[/markdown]` blocks do not require the old-post opti
 The package uses SMF integration hooks only. It does not edit core SMF files.
 
 The Markdown parser is implemented in `Sources/MarkdownSupport.php`. It intentionally converts Markdown to BBCode rather than storing rendered HTML.
+
+## Upgrade notes
+
+Version 1.1.2 fixes an issue where nested BBCode mixed with Markdown could leave internal `MSMD` placeholders in saved posts. It also hides placeholders left in posts by older versions.
+
+The placeholder itself does not contain the text it replaced. Text already lost from a saved post must be restored from the original source, an edit-history plugin, or a database backup.

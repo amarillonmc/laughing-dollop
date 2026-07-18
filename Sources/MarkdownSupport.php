@@ -10,6 +10,7 @@ function markdown_support_preparsecode(&$message, $previewing = false)
 		return;
 	}
 
+	$message = markdown_support_remove_legacy_placeholders($message);
 	$message = markdown_support_convert_markdown_tags($message);
 
 	if (markdown_support_looks_like_markdown($message)) {
@@ -25,6 +26,7 @@ function markdown_support_pre_parsebbc(&$message, &$smileys = null, &$cache_id =
 		return;
 	}
 
+	$message = markdown_support_remove_legacy_placeholders($message);
 	$message = markdown_support_convert_markdown_tags($message);
 
 	if (!empty($parse_tags)) {
@@ -82,6 +84,7 @@ function markdown_support_to_bbcode($text)
 		return $text;
 	}
 
+	$text = markdown_support_remove_legacy_placeholders($text);
 	$text = str_replace(array("\r\n", "\r"), "\n", $text);
 
 	$placeholders = array();
@@ -318,7 +321,11 @@ function markdown_support_clean_attribute($value)
 
 function markdown_support_store_placeholder(&$placeholders, $replacement)
 {
-	$key = "\x1A" . 'MSMD' . count($placeholders) . "\x1A";
+	do {
+		$nonce = strtoupper(substr(md5(uniqid((string) mt_rand(), true)), 0, 16));
+		$key = '{SMFMD' . $nonce . 'P' . count($placeholders) . '}';
+	} while (isset($placeholders[$key]) || strpos($replacement, $key) !== false);
+
 	$placeholders[$key] = $replacement;
 
 	return $key;
@@ -330,5 +337,26 @@ function markdown_support_restore_placeholders($text, $placeholders)
 		return $text;
 	}
 
-	return strtr($text, $placeholders);
+	foreach (array_reverse($placeholders, true) as $key => $replacement) {
+		$text = str_replace($key, $replacement, $text);
+	}
+
+	return $text;
+}
+
+function markdown_support_remove_legacy_placeholders($text)
+{
+	$entity = '(?:&#(?:x(?:1a|241a)|(?:26|9242));)';
+	$cleaned = preg_replace(
+		array(
+			'~\x1AMSMD\d+\x1A~',
+			'~\x{241A}MSMD\d+\x{241A}~u',
+			'~' . $entity . 'MSMD\d+' . $entity . '~i',
+			'~\{SMFMD[A-F0-9]{16}P\d+\}~',
+		),
+		'',
+		$text
+	);
+
+	return $cleaned === null ? $text : $cleaned;
 }

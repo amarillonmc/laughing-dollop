@@ -4,7 +4,7 @@
     <id>markdownsupport:smf</id>
     <name>Markdown Support</name>
     <type>modification</type>
-    <version>1.1.1</version>
+    <version>1.1.2</version>
 
     <install for="2.1 - 2.1.99">
         <readme type="file">README.md</readme>
@@ -17,7 +17,7 @@
         <hook hook="integrate_general_mod_settings" function="markdown_support_general_mod_settings" file="$sourcedir/MarkdownSupport.php" />
     </install>
 
-    <upgrade from="1.0.0" for="2.1 - 2.1.99">
+    <upgrade from="1.0.0 - 1.1.1" for="2.1 - 2.1.99">
         <remove-file name="$sourcedir/MarkdownSupport/Parser.php" />
         <remove-file name="$sourcedir/MarkdownSupport/Hooks.php" />
         <remove-dir name="$sourcedir/MarkdownSupport" />
